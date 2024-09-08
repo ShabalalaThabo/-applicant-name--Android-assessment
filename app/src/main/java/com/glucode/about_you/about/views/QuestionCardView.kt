@@ -58,6 +58,9 @@ class QuestionCardView @JvmOverloads constructor(
             binding.answers.children.filter { it.isSelected }.forEach {
                 it.isSelected = false
             }
+
+            //setting the selected view to true
+            view.isSelected = true
         }
     }
 
