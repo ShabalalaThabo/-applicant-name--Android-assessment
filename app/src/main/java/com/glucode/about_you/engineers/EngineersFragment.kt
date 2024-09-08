@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.glucode.about_you.R
 import com.glucode.about_you.databinding.FragmentEngineersBinding
 import com.glucode.about_you.engineers.models.Engineer
-import com.glucode.about_you.mockdata.MockData
+import com.glucode.about_you.mockdata.MockData.engineers
 
 class EngineersFragment : Fragment() {
     private lateinit var binding: FragmentEngineersBinding
@@ -20,7 +20,9 @@ class EngineersFragment : Fragment() {
     ): View {
         binding = FragmentEngineersBinding.inflate(inflater, container, false)
         setHasOptionsMenu(true)
-        setUpEngineersList(MockData.engineers)
+
+        //Sort all engineers by the years in an ascending order
+        setUpEngineersList(engineers.sortedBy {it.quickStats.years })
         return binding.root
     }
 
@@ -30,9 +32,18 @@ class EngineersFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_years) {
-            return true
+
+        val sortedEngineers = when(item.itemId ) {
+
+            R.id.action_years -> engineers.sortedBy { it.quickStats.years }
+            R.id.action_bugs -> engineers.sortedBy { it.quickStats.bugs }
+            R.id.action_coffees -> engineers.sortedBy { it.quickStats.coffees }
+            else -> return super.onOptionsItemSelected(item)
         }
+
+        //pass the sorted list to update the recyclerView
+        setUpEngineersList(sortedEngineers)
+
         return super.onOptionsItemSelected(item)
     }
 
