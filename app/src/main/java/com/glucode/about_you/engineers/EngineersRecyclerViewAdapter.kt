@@ -31,6 +31,8 @@ class EngineersRecyclerViewAdapter(
             }
             //TODO - set profile picture
 //            statusIcon.setDrawable(item.icon)
+
+
         }
     }
 }
